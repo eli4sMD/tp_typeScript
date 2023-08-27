@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
 
 const MultiplicationTable: React.FC = () => {
+  // Estado para almacenar el número para la tabla de multiplicación y la cantidad de filas
   const [number, setNumber] = useState('');
-  const [limit, setLimit] = useState('');
-  const [table, setTable] = useState<number[]>([]);
+  const [rows, setRows] = useState('');
 
-  const handleGenerateTable = () => {
+  // Función para generar la tabla de multiplicación
+  const generateTable = () => {
     const parsedNumber = parseInt(number);
-    const parsedLimit = parseInt(limit);
-    const tableArray: number[] = [];
+    const parsedRows = parseInt(rows);
+    const table: string[] = [];
 
-    for (let i = 1; i <= parsedLimit; i++) {
-      tableArray.push(parsedNumber * i);
+    for (let i = 1; i <= parsedRows; i++) {
+      const result = parsedNumber * i;
+      table.push(`${parsedNumber} x ${i} = ${result}`);
     }
 
-    setTable(tableArray);
+    return table;
   };
 
   return (
     <div>
+      {/* Inputs para ingresar el número y la cantidad de filas */}
       <input
         type="number"
         value={number}
@@ -26,13 +29,13 @@ const MultiplicationTable: React.FC = () => {
       />
       <input
         type="number"
-        value={limit}
-        onChange={(e) => setLimit(e.target.value)}
+        value={rows}
+        onChange={(e) => setRows(e.target.value)}
       />
-      <button onClick={handleGenerateTable}>Generar Tabla</button>
+      <div>Tabla de multiplicación:</div>
       <ul>
-        {table.map((value, index) => (
-          <li key={index}>{number} x {index + 1} = {value}</li>
+        {generateTable().map((entry, index) => (
+          <li key={index}>{entry}</li>
         ))}
       </ul>
     </div>

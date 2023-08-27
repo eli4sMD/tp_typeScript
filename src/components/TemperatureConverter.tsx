@@ -3,40 +3,49 @@ import { convertTemperature } from '../utils/temperatureUtils';
 import { TemperatureType } from '../types/temperatureTypes';
 
 const TemperatureConverter: React.FC = () => {
-  const [value, setValue] = useState('');
-  const [from, setFrom] = useState<TemperatureType>('Celsius');
-  const [to, setTo] = useState<TemperatureType>('Fahrenheit');
+  // Estado para almacenar el valor de la temperatura, los tipos de temperatura y el valor convertido
+  const [temperatureValue, setTemperatureValue] = useState('');
+  const [fromTemperatureType, setFromTemperatureType] = useState<TemperatureType>('Celsius');
+  const [toTemperatureType, setToTemperatureType] = useState<TemperatureType>('Fahrenheit');
   const [convertedValue, setConvertedValue] = useState<number | undefined>(undefined);
 
+  // Manejador para realizar la conversión cuando se presiona el botón "Convertir"
   const handleConvert = () => {
-    const parsedValue = parseFloat(value);
-    const converted = convertTemperature(parsedValue, from, to);
+    // Convertir el valor de la temperatura a número
+    const parsedTemperatureValue = parseFloat(temperatureValue);
+
+    // Realiza la conversión utilizando la función "convertTemperature"
+    const converted = convertTemperature(parsedTemperatureValue, fromTemperatureType, toTemperatureType);
+
+    // Actualiza el estado con el valor convertido
     setConvertedValue(converted);
   };
 
   return (
     <div>
+      {/* Input y selects para el valor de la temperatura y los tipos de temperatura */}
       <input
         type="number"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={temperatureValue}
+        onChange={(e) => setTemperatureValue(e.target.value)}
       />
       <select
-        value={from}
-        onChange={(e) => setFrom(e.target.value as TemperatureType)}
+        value={fromTemperatureType}
+        onChange={(e) => setFromTemperatureType(e.target.value as TemperatureType)}
       >
         <option value="Celsius">Celsius</option>
         <option value="Fahrenheit">Fahrenheit</option>
       </select>
       <select
-        value={to}
-        onChange={(e) => setTo(e.target.value as TemperatureType)}
+        value={toTemperatureType}
+        onChange={(e) => setToTemperatureType(e.target.value as TemperatureType)}
       >
         <option value="Celsius">Celsius</option>
         <option value="Fahrenheit">Fahrenheit</option>
       </select>
+      {/* Botón para realizar la conversión y mostrar el valor convertido */}
       <button onClick={handleConvert}>Convertir</button>
-      <div>Valor convertido: {convertedValue} {to}</div>
+      <div>Valor convertido: {convertedValue} {toTemperatureType}</div>
     </div>
   );
 };

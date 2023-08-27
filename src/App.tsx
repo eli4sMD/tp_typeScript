@@ -1,5 +1,4 @@
-import React from 'react';
-import './index.css'
+import React, { useState, ReactNode } from 'react';
 import Calculator from './components/Calculator';
 import EvenOddCounter from './components/EvenOddCounter';
 import MultiplicationTable from './components/MultiplicationTable';
@@ -8,25 +7,27 @@ import TemperatureConverter from './components/TemperatureConverter';
 import WordCounter from './components/WordCounter';
 
 const App: React.FC = () => {
+  // Estado para almacenar el componente seleccionado
+  const [selectedComponent, setSelectedComponent] = useState<ReactNode | null>(null);
+
+  // Función para renderizar el componente seleccionado
+  const renderSelectedComponent = (component: ReactNode) => {
+    setSelectedComponent(component);
+  };
+
   return (
-    <div className='div'>
-      <h1>Calculadora Simple</h1>
-      <Calculator />
+    <div>
+      <h1>Selecciona un Componente</h1>
+      {/* Botones para seleccionar un componente */}
+      <button onClick={() => renderSelectedComponent(<Calculator />)}>Calculadora</button>
+      <button onClick={() => renderSelectedComponent(<EvenOddCounter />)}>Contador de Pares e Impares</button>
+      <button onClick={() => renderSelectedComponent(<MultiplicationTable />)}>Tabla de Multiplicar</button>
+      <button onClick={() => renderSelectedComponent(<FibonacciSeries />)}>Serie de Fibonacci</button>
+      <button onClick={() => renderSelectedComponent(<TemperatureConverter />)}>Convertidor de Temperatura</button>
+      <button onClick={() => renderSelectedComponent(<WordCounter />)}>Contador de Palabras</button>
 
-      <h1>Contador de Números Pares e Impares</h1>
-      <EvenOddCounter />
-
-      <h1>Tabla de Multiplicar</h1>
-      <MultiplicationTable />
-
-      <h1>Serie de Fibonacci</h1>
-      <FibonacciSeries />
-
-      <h1>Convertidor de Temperatura</h1>
-      <TemperatureConverter />
-
-      <h1>Contador de Palabras</h1>
-      <WordCounter />
+      {/* Mostrar el componente seleccionado */}
+      {selectedComponent}
     </div>
   );
 };
